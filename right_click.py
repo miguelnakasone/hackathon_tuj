@@ -15,6 +15,10 @@ SQUARE_COLOR = (255, 255, 255)
 won = False
 checkPoint = False
 
+pygame.mixer.music.load('Assets/8-bit-music.mp3')
+pygame.mixer.music.set_volume(0.3)
+pygame.mixer.music.play(-1)
+
 path = [((50, 700), (50, 50), pygame.time.get_ticks()+600000),
         ((400, 400), (50, 50), pygame.time.get_ticks()+600000),
         ((650, 100), (100, 50), pygame.time.get_ticks()+600000)]
