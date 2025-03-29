@@ -1,33 +1,27 @@
-import pygame
-
-# Game window------------------------------------------------------
+import pygame, sys, os
+screen_width,screen_height = 800,800
 pygame.init()
-screen = pygame.display.set_mode((600, 800))
-clock = pygame.time.Clock()
-pygame.display.set_caption("MikunXL")
-#------------------------------------------------------------------
+screen = pygame.display.set_mode((screen_width, screen_height))
+bg = pygame.image.load(os.path.join("assets", "black-bg.png"))
+bg = pygame.transform.scale(bg, (screen_width, screen_height))
+path = [((0, 400), (200, 30)), ((200, 400), (30, 200)), ((200, 600), (300, 30)), ((500, 200), (30, 430)), ((500, 200), (100, 30)),((600,100), (30, 100))]
 
-def draw_window():
-    
+run = True
+pygame.mouse.set_pos((50, 415))
+while run:
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            pygame.quit()
+            sys.exit()
 
+    if any(b[0][0]<pygame.mouse.get_pos()[0]<b[1][0]+b[0][0] and b[0][1]<pygame.mouse.get_pos()[1]<b[1][1]+b[0][1] for b in path):
+        print("true")
+    else:
+        run = False
 
+    screen.blit(bg, (0, 0))
+    for x in path:
+        pygame.draw.rect(screen, (255,255,255),x)
 
-# Main Loop-------------------------------------
-def main():
-    run = True
-    while run:
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                run = False
-
-        screen.fill("Purple")
-        pygame.display.update()
-
-        clock.tick(60)
-
-
-    pygame.quit()
-
-#-----------------------------------------------
-if __name__ == "__main__":
-    main()
+    pygame.draw.circle(screen, (255,0,0), (615, 130), 10)
+    pygame.display.update()
