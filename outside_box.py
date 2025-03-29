@@ -14,6 +14,9 @@ first = False
 won = False
 caught = False
 
+pygame.mixer.music.load('Assets/8-bit-music.mp3')
+pygame.mixer.music.set_volume(0.3)
+pygame.mixer.music.play(-1)
 
 mouse_x, mouse_y = pygame.mouse.get_pos()
 
