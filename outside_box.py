@@ -10,15 +10,17 @@ font = pygame.font.Font(None,size=50)
 
 LIFETIME = 1500 
 SQUARE_COLOR = (255, 255, 255)  
-bridge = False
+first = False
 won = False
+caught = False
+
 
 mouse_x, mouse_y = pygame.mouse.get_pos()
 
 path = [((0, 600), (120, 10)),
-        ((120, 120), (10, 490)),
-        ((100, 120), (20, 10)),
-        ((50, 100), (50, 50)),
+        ((120, 325), (10, 285)),
+        ((120, 325), (130, 10)),
+        ((250, 300), (50, 50)),
         ((400, 400), (50, 50)),
         ((750, 700), (50, 50))]
 
@@ -35,10 +37,10 @@ rectangle_y = 50
 #     path.append(((x , y - height),(width,height))
 
 msg = font.render("Think Outside The Box...",1,(200,0,0))
-# msg2 = font.render("Creating bridges is the 'right' way...",1,(0,200,0))
-msg3 = font.render("You Win!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!",1,(0,200,0))
-msg4 = font.render("I didn't think you'd be 'that' smart...",1,(255,165,0))
-# msg5 = font2.render("  (Don't worry, it's a checkpoint)",1,(128,128,128))
+msg2 = font.render("That was an easy one...",1,(255,165,0))
+msg3 = font.render("You Win!!1!!1!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!",1,(0,200,0))
+msg4 = font.render("I didn't think you'd be 'that' smart...",1,(0,165,0))
+msg5 = font.render("But now there's no 'escape'! Muahahaha",1,(128,128,128))
 # msg6 = font2.render("Sike! it isn't",1,(128,128,128))
 
 run = True
@@ -46,12 +48,20 @@ while run:
     screen.fill((0, 0, 0))
     if won == False :
         screen.blit(msg,(150,100))
+        pygame.draw.circle(screen, (255,0,0),(endpoint_x , endpoint_y),endpoint_radius)
     else :
-        screen.blit(msg3,(300,300))
+        first = False
+        caught = False
+        screen.blit(msg3,(100,200))
+        pygame.draw.circle(screen, (0,255,0),(endpoint_x , endpoint_y),endpoint_radius)
+                
+    if first == True: 
+        screen.blit(msg2,(100,700))
+        screen.blit(msg5,(100,750))
+        path.append((((700,300),(50,50))))
         
-    if bridge == True: 
-        screen.blit(msg4,(100,700))
-        path.append((((750,50),(50,50))))
+    if caught == True: 
+        screen.blit(msg4,(200,500))
  
     
 
@@ -73,14 +83,21 @@ while run:
         if event.type == pygame.QUIT:
             pygame.quit()
             sys.exit()
-            
+        elif event.type == pygame.KEYDOWN:  # Check if a key is pressed
+            if event.key == pygame.K_ESCAPE:  # Check if the ESC key is pressed
+                print("Escape key pressed!")  # Replace this with your action
+                path.extend( (((750,325),(50,10)), ((650,325),(50,10)) , ((650,335),(10,160)) , ((425,485),(225,10)) , ((425,450),(10,35))))
+                caught = True
     pygame.display.flip()
     if ((pygame.mouse.get_pos()[0]-endpoint_x)**2+(pygame.mouse.get_pos()[1]-endpoint_y)**2)<=endpoint_radius**2:
         print("you won")
         won = True
         
     if (pygame.mouse.get_pos()[0] >= 750 and pygame.mouse.get_pos()[0] <= 800) and (pygame.mouse.get_pos()[1] >= 700 and pygame.mouse.get_pos()[1] <= 750):
-        bridge = True
+        first = True
+        
+    if (pygame.mouse.get_pos()[0] >= 750 and pygame.mouse.get_pos()[0] <= 800) and (pygame.mouse.get_pos()[1] >= 700 and pygame.mouse.get_pos()[1] <= 750):
+        first = True
 
     #check if you're out of bounds
     buffer = 1  # 1-pixel border
@@ -94,7 +111,7 @@ while run:
     else:
         print("False")
         if not won:
-            pygame.mouse.set_pos((75, 125))
+            pygame.mouse.set_pos((275, 325))
     # if any(b[0][0]<pygame.mouse.get_pos()[0]<b[1][0]+b[0][0] and b[0][1]<pygame.mouse.get_pos()[1]<b[1][1]+b[0][1] for b in path):
     #     print("True")
     # else:
