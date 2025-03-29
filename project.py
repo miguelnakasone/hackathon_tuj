@@ -43,8 +43,10 @@ while run:
     if won == False :
         screen.blit(msg,(75,100))
         screen.blit(msg2,(150,700))
+        pygame.draw.circle(screen, (255,0,0),(endpoint_x , endpoint_y),endpoint_radius)
     else :
         screen.blit(msg3,(300,300))
+        pygame.draw.circle(screen, (0,255,0),(endpoint_x , endpoint_y),endpoint_radius)
         
     if checkPoint == False: 
         screen.blit(msg4,(450,400))
@@ -59,9 +61,7 @@ while run:
                 pygame.draw.rect(screen, SQUARE_COLOR, (rect[0] ,rect[1], size[0], size[1]))
             else:
                 path.pop(i)
-        
-    pygame.draw.circle(screen, (255,0,0),(endpoint_x , endpoint_y),endpoint_radius)
-        
+
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             pygame.quit()
