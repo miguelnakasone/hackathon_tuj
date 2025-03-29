@@ -1,27 +1,39 @@
-# Example file showing a basic pygame "game loop"
 import pygame
+import sys
 
-# pygame setup
 pygame.init()
-screen = pygame.display.set_mode((1280, 720))
-clock = pygame.time.Clock()
-running = True
+screen_width, screen_height = 800, 800
+screen = pygame.display.set_mode((screen_width, screen_height))
+pygame.display.set_caption("Maze")
 
-while running:
-    # poll for events
-    # pygame.QUIT event means the user clicked X to close your window
+#maze path (x,y),(width, height)
+path=[((0,400), (200, 30))]
+pygame.mouse.set_pos((15, 415))
+
+run = True
+while run:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
-            running = False
+            pygame.quit()
+            sys.exit()
+    
+    #checks if you reach end
+    if ((pygame.mouse.get_pos()[0]-185)**2+(pygame.mouse.get_pos()[1]-415)**2)<=10**2:
+        print("you won")
 
-    # fill the screen with a color to wipe away anything from last frame
-    screen.fill("purple")
+    #check if you're out of bounds
+    if any(b[0][0]<pygame.mouse.get_pos()[0]<b[1][0]+b[0][0] and b[0][1]<pygame.mouse.get_pos()[1]<b[1][1]+b[0][1] for b in path):
+        print("True")
+    else:
+        print("False")
 
-    # RENDER YOUR GAME HERE
-
-    # flip() the display to put your work on screen
-    pygame.display.flip()
-
-    clock.tick(60)  # limits FPS to 60
-
-pygame.quit()
+    #background color
+    screen.fill((0, 0, 0))
+    
+    #creating maze
+    for rect in path:
+        pygame.draw.rect(screen, (255, 255, 255), rect)
+    
+    #end pposition ((color),(x,y), radius)
+    pygame.draw.circle(screen, (255,0,0),(185 , 415),10)
+    pygame.display.update()
