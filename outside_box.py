@@ -45,7 +45,7 @@ msg3 = font.render("You Win!!1!!1!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 msg4 = font.render("I didn't think you'd be 'that' smart...",1,(0,165,0))
 msg5 = font.render("But now there's no 'escape'! Muahahaha",1,(128,128,128))
 # msg6 = font2.render("Sike! it isn't",1,(128,128,128))
-
+flag = False
 run = True
 while run:
     screen.fill((0, 0, 0))
@@ -57,6 +57,7 @@ while run:
         caught = False
         screen.blit(msg3,(100,200))
         pygame.draw.circle(screen, (0,255,0),(endpoint_x , endpoint_y),endpoint_radius)
+        flag = True 
                 
     if first == True: 
         screen.blit(msg2,(100,700))
@@ -122,3 +123,6 @@ while run:
     #     if(won == False):
     #         pygame.mouse.set_pos((75, 125))
     pygame.display.update()
+    if flag == True:
+        break
+pygame.display.quit() 

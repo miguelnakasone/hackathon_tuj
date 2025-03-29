@@ -39,7 +39,7 @@ msg3 = font.render("You Win!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!",1,(0,200,0))
 msg4 = font2.render("<-- Mouse rest stop",1,(128,128,128))
 msg5 = font2.render("  (Don't worry, it's a checkpoint)",1,(128,128,128))
 msg6 = font2.render("Sike! it isn't",1,(128,128,128))
-
+flag = False
 run = True
 while run:
     screen.fill((0, 0, 0))
@@ -51,6 +51,7 @@ while run:
     else :
         screen.blit(msg3,(300,300))
         pygame.draw.circle(screen, (0,255,0),(endpoint_x , endpoint_y),endpoint_radius)
+        flag = True
         
     if checkPoint == False: 
         screen.blit(msg4,(450,400))
@@ -65,11 +66,13 @@ while run:
                 pygame.draw.rect(screen, SQUARE_COLOR, (rect[0] ,rect[1], size[0], size[1]))
             else:
                 path.pop(i)
-
+                
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
+            flag = True
             pygame.quit()
             sys.exit()
+            # break
         elif event.type == pygame.MOUSEBUTTONDOWN:
             if event.button == 3:  # Right Click
                 mouse_x, mouse_y = pygame.mouse.get_pos()
@@ -94,3 +97,6 @@ while run:
         if(won == False):
             pygame.mouse.set_pos((75, 725))
     pygame.display.update()
+    if flag == True:
+        break
+pygame.display.quit() 
